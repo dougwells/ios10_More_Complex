@@ -14,7 +14,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -25,24 +25,27 @@ class ViewController: UIViewController {
     func anyWinner (ticTacArr:[[Int]]) {
 
     }
-    
 
-    
-/*    func checkRows (arr:[[Int]]) {
+    func checkRows (arr:[[Int]]) {
         for i in arr {
-            let sq1 = arr[i][0]
-            let sq2 = arr[i][1]
-            let sq3 = arr[i][2]
-            whoWins(square1: sq1, square2: sq1, square3: sq1)
+            whoWins(square1: i[0], square2: i[1], square3: i[2])
         }
     }
- */
+    
     
     func checkCols (ticTacArr:[[Int]]) {
-        
+        for i in 0...2 {
+            let sq1 = ticTacArr[0][i]
+            let sq2 = ticTacArr[1][i]
+            let sq3 = ticTacArr[2][i]
+            whoWins(square1: sq1, square2: sq2, square3: sq3)
+        }
     }
     
-    func checkDiag (ticTacArr:[[Int]]) {
+    func checkDiag (arr:[[Int]]) {
+        whoWins(square1: arr[0][0], square2: arr[1][1], square3: arr[2][2])
+        whoWins(square1: arr[2][0], square2: arr[1][1], square3: arr[0][2])
+        
         
     }
     
