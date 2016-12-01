@@ -11,9 +11,27 @@ import UIKit
 class ViewController: UIViewController {
     var xWin = false
     var oWin = false
+    var newTicTacGrid: [[Int]] = [[5,5,5], [5,5,5], [5,5,5]]
 
+    @IBAction func squareTapped(_ sender: UIButton!) {
+        switch (sender.tag){
+        case 11:
+        print(sender.tag)
+        case 22:
+        print(sender.tag)
+        default:
+        print("No Code")
+        }
+    }
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        didSomeoneWin(ticTacArr: newTicTacGrid)
+        print("X win = ", xWin)
+        print("O win = ", oWin)
+        
         
     }
 
@@ -22,8 +40,21 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func anyWinner (ticTacArr:[[Int]]) {
-
+/*    func pressed(sender: UIButton!) {
+        if sender.tag == 999 {
+            sender.setImage(UIImage(named: "b.png")!, forState: .Normal)
+            sender.tag = 0
+        } else {
+            sender.setImage(UIImage(named: "a.png")!, forState: .Normal)
+            sender.tag = 999
+        }
+    }
+*/
+ 
+    func didSomeoneWin (ticTacArr:[[Int]]) {
+        checkRows(arr: ticTacArr)
+        checkCols(arr: ticTacArr)
+        checkDiag(arr: ticTacArr)
     }
 
     func checkRows (arr:[[Int]]) {
@@ -33,11 +64,11 @@ class ViewController: UIViewController {
     }
     
     
-    func checkCols (ticTacArr:[[Int]]) {
+    func checkCols (arr:[[Int]]) {
         for i in 0...2 {
-            let sq1 = ticTacArr[0][i]
-            let sq2 = ticTacArr[1][i]
-            let sq3 = ticTacArr[2][i]
+            let sq1 = arr[0][i]
+            let sq2 = arr[1][i]
+            let sq3 = arr[2][i]
             whoWins(square1: sq1, square2: sq2, square3: sq3)
         }
     }
@@ -55,6 +86,25 @@ class ViewController: UIViewController {
         if score == 0 {oWin = true}
         return
     }
+    
+/*    func buttonAction(sender: UIButton!) {
+        switch (sender.tag){
+        case 0:
+        //button 0 action
+        case 1:
+        //button 1 action
+        case 2:
+        //button 2 action
+        case 3:
+        //button 3 action
+        case 4:
+        //button 4 action
+        default:
+            //default
+        }
+    }
+ */
+    
     
     
     
