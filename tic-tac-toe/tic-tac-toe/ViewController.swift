@@ -9,18 +9,43 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var xWin = false
-    var oWin = false
-    var newTicTacGrid: [[Int]] = [[5,5,5], [5,5,5], [5,5,5]]
+    var xWin =      false
+    var oWin =      false
+    var imageX =    true
+    var newTicTacGrid:  [[Int]] = [[5,5,5], [5,5,5], [5,5,5]]
+
 
     @IBAction func squareTapped(_ sender: UIButton!) {
         switch (sender.tag){
         case 11:
-        print(sender.tag)
+            print(sender.tag)
+            if (imageX && newTicTacGrid[0][1] == 5) {
+                newTicTacGrid[0][1] = 1
+                sender.setImage(UIImage(named: "cross.png")!, for: .normal)
+                imageX = !imageX
+            } else if !imageX && newTicTacGrid[0][1] == 5 {
+                newTicTacGrid[0][1] = 0
+                sender.setImage(UIImage(named: "cross.png")!, for: .normal)
+                imageX = !imageX
+            }
+        case 12:
+            print(sender.tag)
+        case 13:
+            print(sender.tag)
+        case 21:
+            print(sender.tag)
         case 22:
-        print(sender.tag)
+            print(sender.tag)
+        case 23:
+            print(sender.tag)
+        case 31:
+            print(sender.tag)
+        case 32:
+            print(sender.tag)
+        case 33:
+            print(sender.tag)
         default:
-        print("No Code")
+            print("No Code")
         }
     }
     
@@ -39,17 +64,6 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-/*    func pressed(sender: UIButton!) {
-        if sender.tag == 999 {
-            sender.setImage(UIImage(named: "b.png")!, forState: .Normal)
-            sender.tag = 0
-        } else {
-            sender.setImage(UIImage(named: "a.png")!, forState: .Normal)
-            sender.tag = 999
-        }
-    }
-*/
  
     func didSomeoneWin (ticTacArr:[[Int]]) {
         checkRows(arr: ticTacArr)
