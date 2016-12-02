@@ -14,12 +14,14 @@ class ViewController: UIViewController {
     var imageX =    false
     var newTicTacGrid:  [[Int]] = [[5,5,5], [5,5,5], [5,5,5]]
 
+    @IBOutlet weak var announceWinner: UILabel!
+    @IBOutlet weak var playAgain: UIButton!
 
     @IBAction func squareTapped(_ sender: UIButton!) {
         var i = Int(sender.tag)/10 - 1
         var j = Int(sender.tag)%10 - 1
         
-        func gridSelected() {
+        func markXOrY() {
             if (imageX && newTicTacGrid[i][j] == 5) {
                 newTicTacGrid[i][j] = 1
                 sender.setImage(UIImage(named: "cross.png")!, for: .normal)
@@ -29,40 +31,41 @@ class ViewController: UIViewController {
                 sender.setImage(UIImage(named: "nought.png")!, for: .normal)
                 imageX = !imageX
             }
+            didSomeoneWin(ticTacArr: newTicTacGrid)
         }
         
         
         switch (sender.tag){
         case 11:
             print(Int(sender.tag))
-            gridSelected()
+            markXOrY()
         case 12:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 13:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 21:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 22:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 23:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 31:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 32:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         case 33:
             print(sender.tag)
-            gridSelected()
+            markXOrY()
         default:
             print("No Code")
-            gridSelected()
+            markXOrY()
         }
     }
     
@@ -70,10 +73,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        didSomeoneWin(ticTacArr: newTicTacGrid)
-        print("X win = ", xWin)
-        print("O win = ", oWin)
-        
         
     }
 
@@ -86,6 +85,14 @@ class ViewController: UIViewController {
         checkRows(arr: ticTacArr)
         checkCols(arr: ticTacArr)
         checkDiag(arr: ticTacArr)
+        if xWin{
+            announceWinner.text = "X Wins !!"
+            playAgain.setTitle("Play Again?",for: .normal)
+        }
+        if oWin {
+            announceWinner.text = "O Wins !!"
+            playAgain.setTitle("Play Again?",for: .normal)
+        }
     }
 
     func checkRows (arr:[[Int]]) {
@@ -118,23 +125,7 @@ class ViewController: UIViewController {
         return
     }
     
-/*    func buttonAction(sender: UIButton!) {
-        switch (sender.tag){
-        case 0:
-        //button 0 action
-        case 1:
-        //button 1 action
-        case 2:
-        //button 2 action
-        case 3:
-        //button 3 action
-        case 4:
-        //button 4 action
-        default:
-            //default
-        }
-    }
- */
+
     
     
     
