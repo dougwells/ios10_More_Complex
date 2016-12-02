@@ -11,41 +11,58 @@ import UIKit
 class ViewController: UIViewController {
     var xWin =      false
     var oWin =      false
-    var imageX =    true
+    var imageX =    false
     var newTicTacGrid:  [[Int]] = [[5,5,5], [5,5,5], [5,5,5]]
 
 
     @IBAction func squareTapped(_ sender: UIButton!) {
-        switch (sender.tag){
-        case 11:
-            print(sender.tag)
-            if (imageX && newTicTacGrid[0][1] == 5) {
-                newTicTacGrid[0][1] = 1
+        var i = Int(sender.tag)/10 - 1
+        var j = Int(sender.tag)%10 - 1
+        
+        func gridSelected() {
+            if (imageX && newTicTacGrid[i][j] == 5) {
+                newTicTacGrid[i][j] = 1
                 sender.setImage(UIImage(named: "cross.png")!, for: .normal)
                 imageX = !imageX
-            } else if !imageX && newTicTacGrid[0][1] == 5 {
-                newTicTacGrid[0][1] = 0
-                sender.setImage(UIImage(named: "cross.png")!, for: .normal)
+            } else if !imageX && newTicTacGrid[i][j] == 5 {
+                newTicTacGrid[i][j] = 0
+                sender.setImage(UIImage(named: "nought.png")!, for: .normal)
                 imageX = !imageX
             }
+        }
+        
+        
+        switch (sender.tag){
+        case 11:
+            print(Int(sender.tag))
+            gridSelected()
         case 12:
             print(sender.tag)
+            gridSelected()
         case 13:
             print(sender.tag)
+            gridSelected()
         case 21:
             print(sender.tag)
+            gridSelected()
         case 22:
             print(sender.tag)
+            gridSelected()
         case 23:
             print(sender.tag)
+            gridSelected()
         case 31:
             print(sender.tag)
+            gridSelected()
         case 32:
             print(sender.tag)
+            gridSelected()
         case 33:
             print(sender.tag)
+            gridSelected()
         default:
             print("No Code")
+            gridSelected()
         }
     }
     
