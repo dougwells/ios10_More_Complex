@@ -17,6 +17,50 @@ class ViewController: UIViewController {
     @IBOutlet weak var announceWinner: UILabel!
     @IBOutlet weak var playAgain: UIButton!
 
+    @IBAction func playAgainTapped(_ sender: Any) {
+        
+        //Reset Game Booleans
+        xWin = false
+        oWin = false
+        imageX = false
+        
+        //Reset Grid
+        newTicTacGrid = [[5,5,5], [5,5,5], [5,5,5]]
+        
+        //Reset X O images
+        for i in 11...13 {
+            let button = view.viewWithTag(i) as! UIButton
+            button.setImage(nil, for: .normal)
+        }
+        
+        for i in 21...23 {
+            let button = view.viewWithTag(i) as! UIButton
+            button.setImage(nil, for: .normal)
+        }
+        
+        for i in 31...33 {
+            let button = view.viewWithTag(i) as! UIButton
+            button.setImage(nil, for: .normal)
+        }
+
+        
+        //Reset Winner Announcement & Play Again Button
+        print("Play again tapped")
+        announceWinner.text = ""
+        playAgain.setTitle("",for: .normal)
+        print(newTicTacGrid)
+        //didSomeoneWin(ticTacArr: [[5,5,5], [5,5,5], [5,5,5]])
+
+
+        //Reset Xs & Os on grid
+/*        for i in 11...13 {
+            let tmpButton = self.view.viewWithTag(i) as! UIButton
+            tmpButton.setImage(UIImage(named: "")!, for: .normal)
+        }
+ */
+    }
+    
+    
     @IBAction func squareTapped(_ sender: UIButton!) {
         var i = Int(sender.tag)/10 - 1
         var j = Int(sender.tag)%10 - 1
@@ -32,6 +76,7 @@ class ViewController: UIViewController {
                 imageX = !imageX
             }
             didSomeoneWin(ticTacArr: newTicTacGrid)
+            print("From within markXOrY fn: ", newTicTacGrid)
         }
         
         
@@ -96,6 +141,7 @@ class ViewController: UIViewController {
     }
 
     func checkRows (arr:[[Int]]) {
+        print("checkRows: ", arr)
         for i in arr {
             whoWins(square1: i[0], square2: i[1], square3: i[2])
         }
@@ -103,6 +149,7 @@ class ViewController: UIViewController {
     
     
     func checkCols (arr:[[Int]]) {
+        print("checkCols: ", arr)
         for i in 0...2 {
             let sq1 = arr[0][i]
             let sq2 = arr[1][i]
@@ -112,6 +159,7 @@ class ViewController: UIViewController {
     }
     
     func checkDiag (arr:[[Int]]) {
+        print("checkDiag: ", arr)
         whoWins(square1: arr[0][0], square2: arr[1][1], square3: arr[2][2])
         whoWins(square1: arr[2][0], square2: arr[1][1], square3: arr[0][2])
         
@@ -125,7 +173,9 @@ class ViewController: UIViewController {
         return
     }
     
-
+    func resetGame (ticTacArr:[[Int]]) {
+        
+    }
     
     
     
