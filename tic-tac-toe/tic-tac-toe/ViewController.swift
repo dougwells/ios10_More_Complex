@@ -29,18 +29,21 @@ class ViewController: UIViewController {
         
         //Reset X O images
         for i in 11...13 {
-            let button = view.viewWithTag(i) as! UIButton
-            button.setImage(nil, for: .normal)
+            if let button = view.viewWithTag(i) as? UIButton {
+               button.setImage(nil, for: .normal)
+            }
         }
         
         for i in 21...23 {
-            let button = view.viewWithTag(i) as! UIButton
-            button.setImage(nil, for: .normal)
+            if let button = view.viewWithTag(i) as? UIButton {
+                button.setImage(nil, for: .normal)
+            }
         }
         
         for i in 31...33 {
-            let button = view.viewWithTag(i) as! UIButton
-            button.setImage(nil, for: .normal)
+            if let button = view.viewWithTag(i) as? UIButton {
+                button.setImage(nil, for: .normal)
+            }
         }
 
         
