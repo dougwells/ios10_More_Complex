@@ -29,16 +29,39 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         
         let userLocation: CLLocation = locations[0]
         
+        //Set lat/lon, altitude and speed variables
+        let lat = userLocation.coordinate.latitude
+        let lon = userLocation.coordinate.longitude
+        let altitude = userLocation.altitude
+        let course = userLocation.course
+        let speed = userLocation.speed
+
+        
         CLGeocoder().reverseGeocodeLocation(userLocation) { (placemarks, error) in
             if error != nil {
                 print (error)
             } else {
+                
+            //Set variables for address
                 if let placemark = placemarks?[0] {
+                    
+                    //Ternary solution to set var = empty string if no placemark value
+                    let city = placemark.locality != nil ? placemark.locality! : ""
+                    
+                    //If statement solution to same issue ternary solves above
+                        var state = ""
                     if placemark.administrativeArea != nil {
-                        var state = placemark.administrativeArea!
-                        print(state)
+                        state = placemark.administrativeArea!
                     }
-
+                    
+                    let zip = placemark.postalCode != nil ? placemark.postalCode! : ""
+                    
+                    let address = placemark.subThoroughfare != nil ? placemark.subThoroughfare! : ""
+                    let street = placemark.thoroughfare != nil ? placemark.thoroughfare! : ""
+                    
+                    print(address, street, "\n", city, state, "\n", state, zip)
+                    print(lat, lon, "\n", altitude, "\n", course, speed)
+                    
                 }
             }
         }
