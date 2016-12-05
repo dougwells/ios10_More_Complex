@@ -12,8 +12,16 @@ import MapKit
 
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
-    @IBOutlet var map: MKMapView!
     var locationManager = CLLocationManager()
+    
+    @IBOutlet var latLabel: UILabel!
+    @IBOutlet weak var lonLabel: UILabel!
+    @IBOutlet weak var courseLab: UILabel!
+    @IBOutlet weak var speedLab: UILabel!
+    @IBOutlet weak var altLab: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +66,15 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
                     
                     let address = placemark.subThoroughfare != nil ? placemark.subThoroughfare! : ""
                     let street = placemark.thoroughfare != nil ? placemark.thoroughfare! : ""
+                    let fullAddress:String = String(address)+" "+street+"\n"+city+", " + state+"  "+zip
+                    
+                    self.latLabel.text = String(lat)
+                    self.lonLabel.text = String(lon)
+                    self.courseLab.text = String(course)
+                    self.speedLab.text = String(speed)
+                    self.altLab.text = String(altitude)
+                    self.addressLabel.text = fullAddress
+                
                     
                     print(address, street, "\n", city, state, "\n", state, zip)
                     print(lat, lon, "\n", altitude, "\n", course, speed)
