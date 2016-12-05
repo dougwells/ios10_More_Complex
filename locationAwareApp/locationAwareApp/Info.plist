@@ -28,10 +28,10 @@
 	<array>
 		<string>armv7</string>
 	</array>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>When app is running, it will use your location</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>App ALWAYS uses your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App needs location while it is running.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

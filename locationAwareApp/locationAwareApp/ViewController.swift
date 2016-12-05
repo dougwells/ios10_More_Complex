@@ -8,11 +8,10 @@
 
 import UIKit
 import CoreLocation
-import MapKit
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate {
     
-    var locationManager = CLLocationManager()
+    var manager = CLLocationManager()
     
     @IBOutlet var latLabel: UILabel!
     @IBOutlet weak var lonLabel: UILabel!
@@ -25,10 +24,11 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        locationManager.delegate = self  //sets delegate to VC so VC can control it
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest  //several accuracies avail.
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
+        
     }
 
     
