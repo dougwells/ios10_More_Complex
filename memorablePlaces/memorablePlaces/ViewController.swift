@@ -53,7 +53,16 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         CLGeocoder().reverseGeocodeLocation(longPressLocation) { (placemarks, error) in
             if error != nil {
-                print (error)
+                print ("Error", error)
+                //Make Annotation with Error Label
+                let annotation = MKPointAnnotation()
+                annotation.title = "No Address Avail"
+                annotation.subtitle = "Reverse GeoCode Error"
+                annotation.coordinate.latitude = lat
+                annotation.coordinate.longitude = lon
+                print("Err:", annotation.title, annotation.subtitle)
+                self.map.addAnnotation(annotation)
+
             } else {
                 //Set variables for address
                 if let placemark = placemarks?[0] {
@@ -63,17 +72,22 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     let state = placemark.administrativeArea != nil ? placemark.administrativeArea! : ""
                     self.streetAddress = String(address)+" "+street
                     self.cityState = city+", " + state
+                    print("placemark:", self.streetAddress, self.cityState)
+                    
+                    //Make Annotation
+                    let annotation = MKPointAnnotation()
+                    annotation.title = self.streetAddress
+                    annotation.subtitle = self.cityState
+                    annotation.coordinate.latitude = lat
+                    annotation.coordinate.longitude = lon
+                    print("annotation:", self.streetAddress, self.cityState)
+                    self.map.addAnnotation(annotation)
+
                 }
             }
         }   //End CLGeocoder
         
-        //Make Annotation
-        let annotation = MKPointAnnotation()
-        annotation.title = streetAddress
-        annotation.subtitle = cityState
-        annotation.coordinate = map.convert(touchPoint, toCoordinateFrom: self.map)
-        map.addAnnotation(annotation)
-
+        
         
 
     }
