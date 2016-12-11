@@ -17,6 +17,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        drawMap()
+        userLongPress()
+        
+    }
+    
+    func drawMap(){
         //Set vars to make code cleaner.  Note: CL stands for "Call Location".  Coord are for Park City
         let latitude: CLLocationDegrees = 40.6461
         let longitude: CLLocationDegrees = -111.4980
@@ -35,12 +41,13 @@ class ViewController: UIViewController, MKMapViewDelegate {
         //Finally, time to tell iOS where in map to set initial location and zoom level
         //Technically, could simply use this line but code would not be clear ...
         map.setRegion(region, animated: true)
-        
+    }
+    
+    func userLongPress() {
         let uilpgr = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.longpress(gestureRecognizer:)))
         
         uilpgr.minimumPressDuration = 2     //2 second press
         map.addGestureRecognizer(uilpgr)
-
     }
     
     func longpress (gestureRecognizer: UIGestureRecognizer) {
@@ -82,15 +89,33 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     annotation.coordinate.longitude = lon
                     print("annotation:", self.streetAddress, self.cityState)
                     self.map.addAnnotation(annotation)
-
-                }
+                }  //End PlaceMark
+            }  //End Else
+            
+            /* Permanent storage
+            let placesObject = UserDefaults.standard.object(forKey: "places")
+            
+            var places: [String]	//“unresolved” var error w/o this + tempItems
+            
+            if let placesItems = placesObject as? [String] {
+                places = tempPlaces
+                places.append(newPlaces.text!)
+                
+            } else {
+                items = [newPlaces.text!]
             }
-        }   //End CLGeocoder
-        
-        
-        
+            
+            UserDefaults.standard.set(places, forKey: "places")
+            
+            places.text = ""
+            self.view.endEditing(true)
+        }
+ */
 
-    }
+            
+            
+        }   //End CLGeocoder
+    }   //End longPress Function
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
