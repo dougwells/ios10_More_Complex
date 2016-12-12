@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var map: MKMapView!
     var streetAddress: String = ""
     var cityState: String = ""
@@ -59,19 +59,20 @@ class ViewController: UIViewController, MKMapViewDelegate {
         let longPressLocation = CLLocation(latitude: lat, longitude: lon)
         
         CLGeocoder().reverseGeocodeLocation(longPressLocation) { (placemarks, error) in
+            
+            let annotation = MKPointAnnotation()
             if error != nil {
                 print ("Error", error)
-                //Make Annotation with Error Label
-                let annotation = MKPointAnnotation()
+                //Error Annotation Label
                 annotation.title = "No Address Avail"
                 annotation.subtitle = "Lat: "+String(round(lat))+", Lon: "+String(round(lon))
                 annotation.coordinate.latitude = lat
                 annotation.coordinate.longitude = lon
                 print("Err:", annotation.title, annotation.subtitle)
-                self.map.addAnnotation(annotation)
-
+                
             } else {
-                //Set variables for address
+                
+                //Success: Get Address
                 if let placemark = placemarks?[0] {
                     let address = placemark.subThoroughfare != nil ? placemark.subThoroughfare! : ""
                     let street = placemark.thoroughfare != nil ? placemark.thoroughfare! : ""
@@ -81,41 +82,51 @@ class ViewController: UIViewController, MKMapViewDelegate {
                     self.cityState = city+", " + state
                     print("placemark:", self.streetAddress, self.cityState)
                     
-                    //Make Annotation
-                    let annotation = MKPointAnnotation()
+                    //Success Annotation Label
                     annotation.title = self.streetAddress
                     annotation.subtitle = self.cityState
                     annotation.coordinate.latitude = lat
                     annotation.coordinate.longitude = lon
                     print("annotation:", self.streetAddress, self.cityState)
-                    self.map.addAnnotation(annotation)
+                    
                 }  //End PlaceMark
             }  //End Else
-            
-            /* Permanent storage
-            let placesObject = UserDefaults.standard.object(forKey: "places")
-            
-            var places: [String]	//“unresolved” var error w/o this + tempItems
-            
-            if let placesItems = placesObject as? [String] {
-                places = tempPlaces
-                places.append(newPlaces.text!)
-                
-            } else {
-                items = [newPlaces.text!]
-            }
-            
-            UserDefaults.standard.set(places, forKey: "places")
-            
-            places.text = ""
-            self.view.endEditing(true)
-        }
- */
-
-            
+            self.map.addAnnotation(annotation)
+            //self.saveToPermanent(annotation: annotation)
             
         }   //End CLGeocoder
     }   //End longPress Function
+    
+    func saveToPermanent (annotation: MKPointAnnotation) {
+    
+     let placesObject = UserDefaults.standard.object(forKey: "places")
+     var places: [MKPointAnnotation]	//“unresolved” var error w/o this + tempItems
+     
+     if let tempPlaces = placesObject as? [MKPointAnnotation] {
+     places = tempPlaces
+     places.append(annotation)
+     
+     } else {
+     places = [annotation]
+     }
+     
+     UserDefaults.standard.set(places, forKey: "places")
+ 
+    }
+    
+    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
+        cell.textLabel?.text = "Test"
+        return cell
+    }
+    
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
