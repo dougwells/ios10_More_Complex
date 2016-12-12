@@ -92,7 +92,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                 }  //End PlaceMark
             }  //End Else
             self.map.addAnnotation(annotation)
-            //self.saveToPermanent(annotation: annotation)
+            self.saveToPermanent(annotation: annotation)
+
             
         }   //End CLGeocoder
     }   //End longPress Function
@@ -103,14 +104,14 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
      var places: [MKPointAnnotation]	//“unresolved” var error w/o this + tempItems
      
      if let tempPlaces = placesObject as? [MKPointAnnotation] {
-     places = tempPlaces
-     places.append(annotation)
+        places = tempPlaces
+        places.append(annotation)
      
      } else {
-     places = [annotation]
+        places = [annotation]
      }
-     
-     UserDefaults.standard.set(places, forKey: "places")
+        print("Places: ", places)
+     //UserDefaults.standard.set(places, forKey: "places")
  
     }
     
