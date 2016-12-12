@@ -8,11 +8,13 @@
 
 import UIKit
 import MapKit
+import Foundation
 
 class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet var map: MKMapView!
     var streetAddress: String = ""
     var cityState: String = ""
+    var places: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,19 +82,21 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                     let state = placemark.administrativeArea != nil ? placemark.administrativeArea! : ""
                     self.streetAddress = String(address)+" "+street
                     self.cityState = city+", " + state
-                    print("placemark:", self.streetAddress, self.cityState)
                     
                     //Success Annotation Label
                     annotation.title = self.streetAddress
                     annotation.subtitle = self.cityState
                     annotation.coordinate.latitude = lat
                     annotation.coordinate.longitude = lon
-                    print("annotation:", self.streetAddress, self.cityState)
+                    print("annotation:", annotation.title!, annotation.subtitle!)
+                    
+                    //save successful annotation permantly
+                    self.saveToPermanent(annotation: annotation)
                     
                 }  //End PlaceMark
             }  //End Else
             self.map.addAnnotation(annotation)
-            self.saveToPermanent(annotation: annotation)
+            
 
             
         }   //End CLGeocoder
@@ -101,28 +105,31 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
     func saveToPermanent (annotation: MKPointAnnotation) {
     
      let placesObject = UserDefaults.standard.object(forKey: "places")
-     var places: [MKPointAnnotation]	//“unresolved” var error w/o this + tempItems
-     
-     if let tempPlaces = placesObject as? [MKPointAnnotation] {
+
+        
+        if let tempPlaces = placesObject as? [String] {
         places = tempPlaces
-        places.append(annotation)
+        places.append(annotation.title!)
+        print("places array: ", places)
+ 
      
      } else {
-        places = [annotation]
+        places = [annotation.title!]
+        print("first array element: ", places)
      }
-        print("Places: ", places)
-     //UserDefaults.standard.set(places, forKey: "places")
+        UserDefaults.standard.set(places, forKey: "places")
  
     }
     
     internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        print("numRows=", places.count)
+        return places.count
     }
     
     internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = "Test"
+        cell.textLabel?.text = String(places[indexPath.row])
         return cell
     }
     
