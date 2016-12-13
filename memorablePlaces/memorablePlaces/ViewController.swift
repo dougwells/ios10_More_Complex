@@ -25,8 +25,15 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func drawMap(){
         //Set vars to make code cleaner.  Note: CL stands for "Call Location".  Coord are for Park City
-        let latitude: CLLocationDegrees = 40.6461
-        let longitude: CLLocationDegrees = -111.4980
+
+            var latitude = CLLocationDegrees(40.6461)
+            var longitude = CLLocationDegrees (-111.4980)
+        
+        if activePlace != -1 {
+            latitude = CLLocationDegrees(places[activePlace]["lat"]!)!
+            longitude = CLLocationDegrees (places[activePlace]["lon"]!)!
+        }
+        
         let latDelta: CLLocationDegrees = 0.05	//amnt of lat/lon in set amount of space
         let lonDelta: CLLocationDegrees = 0.05	//lower = less distance so more “zoom”
         
@@ -52,49 +59,52 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }
     
     func longpress (gestureRecognizer: UIGestureRecognizer) {
-        let touchPoint = gestureRecognizer.location(in: self.map)
-        
-        //get address
-        let lat = map.convert(touchPoint, toCoordinateFrom: self.map).latitude
-        let lon = map.convert(touchPoint, toCoordinateFrom: self.map).longitude
-        let longPressLocation = CLLocation(latitude: lat, longitude: lon)
-        
-        CLGeocoder().reverseGeocodeLocation(longPressLocation) { (placemarks, error) in
+        if gestureRecognizer.state == UIGestureRecognizerState.began {
+            let touchPoint = gestureRecognizer.location(in: self.map)
             
-            let annotation = MKPointAnnotation()
-            if error != nil {
-                print ("Error", error)
-                //Error Annotation Label
-                annotation.title = "No Address Avail"
-                annotation.subtitle = "Lat: "+String(round(lat))+", Lon: "+String(round(lon))
-                annotation.coordinate.latitude = lat
-                annotation.coordinate.longitude = lon
-                print("Err:", annotation.title, annotation.subtitle)
+            //get address
+            let lat = map.convert(touchPoint, toCoordinateFrom: self.map).latitude
+            let lon = map.convert(touchPoint, toCoordinateFrom: self.map).longitude
+            let longPressLocation = CLLocation(latitude: lat, longitude: lon)
+            
+            CLGeocoder().reverseGeocodeLocation(longPressLocation) { (placemarks, error) in
                 
-            } else {
-                
-                //Success: Get Address
-                if let placemark = placemarks?[0] {
-                    let address = placemark.subThoroughfare != nil ? placemark.subThoroughfare! : ""
-                    let street = placemark.thoroughfare != nil ? placemark.thoroughfare! : ""
-                    let city = placemark.locality != nil ? placemark.locality! : ""
-                    let state = placemark.administrativeArea != nil ? placemark.administrativeArea! : ""
-                    self.streetAddress = String(address)+" "+street
-                    self.cityState = city+", " + state
-                    
-                    //Success Annotation Label
-                    annotation.title = self.streetAddress
-                    annotation.subtitle = self.cityState
+                let annotation = MKPointAnnotation()
+                if error != nil {
+                    print ("Error", error)
+                    //Error Annotation Label
+                    annotation.title = "No Address Avail"
+                    annotation.subtitle = "Lat: "+String(round(lat))+", Lon: "+String(round(lon))
                     annotation.coordinate.latitude = lat
                     annotation.coordinate.longitude = lon
-                    print("annotation:", annotation.title!, annotation.subtitle!)
+                    print("Err:", annotation.title, annotation.subtitle)
                     
-                    //save successful annotation permantly
-                    //self.saveToPermanent(annotation: annotation)
+                } else {
                     
-                }  //End PlaceMark
-            }  //End Else
-            self.map.addAnnotation(annotation)
+                    //Success: Get Address
+                    if let placemark = placemarks?[0] {
+                        let address = placemark.subThoroughfare != nil ? placemark.subThoroughfare! : ""
+                        let street = placemark.thoroughfare != nil ? placemark.thoroughfare! : ""
+                        let city = placemark.locality != nil ? placemark.locality! : ""
+                        let state = placemark.administrativeArea != nil ? placemark.administrativeArea! : ""
+                        self.streetAddress = String(address)+" "+street
+                        self.cityState = city+", " + state
+                        
+                        //Success Annotation Label
+                        annotation.title = self.streetAddress
+                        annotation.subtitle = self.cityState
+                        annotation.coordinate.latitude = lat
+                        annotation.coordinate.longitude = lon
+                        print("annotation:", annotation.title!, annotation.subtitle!)
+                        
+                        //save successful annotation permantly
+                        //self.saveToPermanent(annotation: annotation)
+                        
+                    }  //End PlaceMark
+                }  //End Else
+                self.map.addAnnotation(annotation)
+        } //End gestureRecognizer Began
+        
             
 
             
