@@ -16,10 +16,21 @@ class PlacesViewController: UITableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         
+        var initialDataLoad = true
+        
+        if let tempPlaces = UserDefaults.standard.object(forKey: "places") as? [Dictionary<String, String>] {
+            let places = tempPlaces
+            initialDataLoad = false
+            print("places set by tempPlaces", tempPlaces)
+            print("places.count=", places.count)
+            print("places[0].count=", places[0].count)
+        }
         if places.count == 1 && places[0].count == 0 {
             places.remove(at: 0)
             places.append(["name":"Park City", "lat":"40.6461", "lon":"-111.4980"])
             places.append(["name":"Taj Majal", "lat":"27.175277", "lon":"78.042128"])
+            print("places set by defaults")
+            UserDefaults.standard.set(places, forKey:"places")
         }
         activePlace = -1
         table.reloadData()
@@ -74,7 +85,9 @@ class PlacesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.delete) {
             places.remove(at: indexPath.row)
+            UserDefaults.standard.set(places, forKey:"places")
             table.reloadData()
+            
         }
     }
 

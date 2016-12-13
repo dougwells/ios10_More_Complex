@@ -95,10 +95,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
                         annotation.subtitle = self.cityState
                         annotation.coordinate.latitude = lat
                         annotation.coordinate.longitude = lon
-                        print("annotation:", annotation.title!, annotation.subtitle!)
+                        print("new annotation:", annotation.title!, annotation.subtitle!)
                         
-                        //save successful annotation permantly
-                        //self.saveToPermanent(annotation: annotation)
+                        //save successful annotation to list
+                        places.append(["name":self.cityState, "lat":String(lat), "lon":String(lon)])
+                        UserDefaults.standard.set(places, forKey:"places")
+                        print("new annotation:", annotation.title!, annotation.subtitle!, places)
                         
                     }  //End PlaceMark
                 }  //End Else
@@ -112,7 +114,7 @@ class ViewController: UIViewController, MKMapViewDelegate {
     }   //End longPress Function
     
     /*
-    func saveToPermanent (annotation: MKPointAnnotation) {
+    func saveToPermanent (annotation: Array) {
     
      let placesObject = UserDefaults.standard.object(forKey: "places")
 
