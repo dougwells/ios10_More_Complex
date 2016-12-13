@@ -10,15 +10,14 @@ import UIKit
 import MapKit
 import Foundation
 
-class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var map: MKMapView!
     var streetAddress: String = ""
     var cityState: String = ""
-    var places: [String] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(activePlace)
         drawMap()
         userLongPress()
         
@@ -91,7 +90,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
                     print("annotation:", annotation.title!, annotation.subtitle!)
                     
                     //save successful annotation permantly
-                    self.saveToPermanent(annotation: annotation)
+                    //self.saveToPermanent(annotation: annotation)
                     
                 }  //End PlaceMark
             }  //End Else
@@ -102,6 +101,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         }   //End CLGeocoder
     }   //End longPress Function
     
+    /*
     func saveToPermanent (annotation: MKPointAnnotation) {
     
      let placesObject = UserDefaults.standard.object(forKey: "places")
@@ -120,18 +120,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UITableViewDelegate, 
         UserDefaults.standard.set(places, forKey: "places")
  
     }
+ */
     
-    internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("numRows=", places.count)
-        return places.count
-    }
-    
-    internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = String(places[indexPath.row])
-        return cell
-    }
+
     
     
 
