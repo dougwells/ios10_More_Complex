@@ -40,6 +40,7 @@ class PlacesViewController: UITableViewController {
     }
     
     func setDefaultLocation(){
+        //Current default is Park City and Taj Mahal
         if places.count != 0 {places.remove(at: 0)}
         places.append(["name":"Park City", "lat":"40.6461", "lon":"-111.4980"])
         places.append(["name":"Taj Majal", "lat":"27.175277", "lon":"78.042128"])
