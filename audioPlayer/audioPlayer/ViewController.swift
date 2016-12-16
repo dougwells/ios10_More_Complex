@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     var player = AVAudioPlayer()
     var progress: Double = 0.5
     var playerIsPlaying = false
+    var displayLink: CADisplayLink!
     
     
     @IBOutlet var slider: UISlider!
@@ -21,19 +22,25 @@ class ViewController: UIViewController {
     
     @IBAction func play(_ sender: Any) {
         player.play()
-        timeSlider.value = Float(player.currentTime/player.duration)
         playerIsPlaying = true
+        displayLink = CADisplayLink(target: self, selector: Selector(("upDateTimeSlider")))
+        displayLink.preferredFramesPerSecond = 1
+        displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
     }
 
     @IBAction func pause(_ sender: Any) {
+        displayLink.invalidate()
         player.pause()
         playerIsPlaying = false
+        upDateTimeSlider()
     }
     
     @IBAction func stop(_ sender: Any) {
         player.stop()
         player.currentTime = 0
         playerIsPlaying = false
+        displayLink.invalidate()
+        upDateTimeSlider()
     }
     
     
@@ -42,9 +49,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func timeSliderMoved(_ sender: Any) {
+        displayLink.invalidate()
         progress = Double(timeSlider.value)
         player.currentTime = progress*player.duration
-        timeSlider.value = Float(player.currentTime/player.duration)
+        timeSlider.value = Float(progress)
+    }
+    
+    func upDateTimeSlider(){
+        progress = Double(player.currentTime/player.duration)
+        self.timeSlider.value = Float(progress)
+        print("TimeSlider.value = ", self.timeSlider.value)
+
+
     }
     
     
@@ -55,6 +71,7 @@ class ViewController: UIViewController {
         let audioPath = Bundle.main.path(forResource: "rainbow", ofType: "mp3")
         do {
             try player = AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath!))
+            progress = 0
             
             
             
@@ -63,9 +80,7 @@ class ViewController: UIViewController {
             //process errors
         }
         
-        if playerIsPlaying {
-            timeSlider.value = Float(player.currentTime/player.duration)
-        }
+
         
     }
     
