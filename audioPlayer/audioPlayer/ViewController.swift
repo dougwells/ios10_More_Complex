@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var player = AVAudioPlayer()
     var progress: Double = 0.5
     var playerIsPlaying = false
-    var displayLink: CADisplayLink!
+    var displayLink: CADisplayLink!     //Using as a timer
     
     
     @IBOutlet var slider: UISlider!
@@ -23,6 +23,13 @@ class ViewController: UIViewController {
     @IBAction func play(_ sender: Any) {
         player.play()
         playerIsPlaying = true
+        
+        /* Runs function upDateTimeSlider each time screen updates
+           BUT, we only run fn 1 frame per second
+           Note:  Also need .add(to: RunLoop) for this to work
+           Could also have used a simple timer = Timer()
+        */
+        
         displayLink = CADisplayLink(target: self, selector: Selector(("upDateTimeSlider")))
         displayLink.preferredFramesPerSecond = 1
         displayLink.add(to: RunLoop.current, forMode: RunLoopMode.commonModes)
