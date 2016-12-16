@@ -17,9 +17,16 @@ class ViewController: UIViewController {
     @IBAction func play(_ sender: Any) {
         player.play()
     }
+
     @IBAction func pause(_ sender: Any) {
         player.pause()
     }
+    
+    @IBAction func stop(_ sender: Any) {
+        player.stop()
+    }
+    
+    
     @IBAction func sliderMoved(_ sender: Any) {
         player.volume = slider.value
     }
