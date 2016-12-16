@@ -56,10 +56,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func timeSliderMoved(_ sender: Any) {
-        displayLink.invalidate()
         progress = Double(timeSlider.value)
         player.currentTime = progress*player.duration
         timeSlider.value = Float(progress)
+        upDateTimeSlider()
     }
     
     func upDateTimeSlider(){
