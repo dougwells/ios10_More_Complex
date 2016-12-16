@@ -76,6 +76,9 @@
                                     <constraint firstAttribute="height" constant="30" id="8E4-Xd-6EQ"/>
                                     <constraint firstAttribute="width" constant="300" id="ebu-kZ-9Fa"/>
                                 </constraints>
+                                <connections>
+                                    <action selector="timeSliderMoved:" destination="BYZ-38-t0r" eventType="valueChanged" id="Uem-0g-t84"/>
+                                </connections>
                             </slider>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -94,6 +97,7 @@
                     </view>
                     <connections>
                         <outlet property="slider" destination="d3P-iD-Sj6" id="vwi-lg-cfe"/>
+                        <outlet property="timeSlider" destination="Ijd-9R-05I" id="h32-aW-pDY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

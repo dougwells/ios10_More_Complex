@@ -12,18 +12,28 @@ import AVFoundation
 class ViewController: UIViewController {
     
     var player = AVAudioPlayer()
+    var progress: Double = 0.5
+    var playerIsPlaying = false
+    
+    
     @IBOutlet var slider: UISlider!
+    @IBOutlet var timeSlider: UISlider!
     
     @IBAction func play(_ sender: Any) {
         player.play()
+        timeSlider.value = Float(player.currentTime/player.duration)
+        playerIsPlaying = true
     }
 
     @IBAction func pause(_ sender: Any) {
         player.pause()
+        playerIsPlaying = false
     }
     
     @IBAction func stop(_ sender: Any) {
         player.stop()
+        player.currentTime = 0
+        playerIsPlaying = false
     }
     
     
@@ -31,6 +41,11 @@ class ViewController: UIViewController {
         player.volume = slider.value
     }
     
+    @IBAction func timeSliderMoved(_ sender: Any) {
+        progress = Double(timeSlider.value)
+        player.currentTime = progress*player.duration
+        timeSlider.value = Float(player.currentTime/player.duration)
+    }
     
     
     
@@ -47,6 +62,11 @@ class ViewController: UIViewController {
             
             //process errors
         }
+        
+        if playerIsPlaying {
+            timeSlider.value = Float(player.currentTime/player.duration)
+        }
+        
     }
     
     override func didReceiveMemoryWarning() {
