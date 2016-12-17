@@ -7,12 +7,32 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
+    
+    var player = AVAudioPlayer()
+    var soundTrack = "howl"
+    let audioPath = Bundle.main.path(forResource: "howl", ofType: "mp3")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+
+    }
+    
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if event?.subtype == UIEventSubtype.motionShake {
+            do {
+                try player = AVAudioPlayer(contentsOf: URL(fileURLWithPath: audioPath!))
+                player.play()
+                
+            } catch {
+                //Error Message
+                print("Ooops.  Try Catch Error setting up AVAudioPlayer")
+            }
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
