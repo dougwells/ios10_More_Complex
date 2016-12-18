@@ -23,6 +23,7 @@
 		7005D2401E05A5B400FE7D8F /* howl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7005D2351E05A5B400FE7D8F /* howl.mp3 */; };
 		7005D2411E05A5B400FE7D8F /* whistle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7005D2361E05A5B400FE7D8F /* whistle.mp3 */; };
 		7005D2421E05A5B400FE7D8F /* thunder.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 7005D2371E05A5B400FE7D8F /* thunder.mp3 */; };
+		70E6A2491E06D9A50040A509 /* shake.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 70E6A2481E06D9A50040A509 /* shake.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		7005D2351E05A5B400FE7D8F /* howl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = howl.mp3; sourceTree = "<group>"; };
 		7005D2361E05A5B400FE7D8F /* whistle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = whistle.mp3; sourceTree = "<group>"; };
 		7005D2371E05A5B400FE7D8F /* thunder.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = thunder.mp3; sourceTree = "<group>"; };
+		70E6A2481E06D9A50040A509 /* shake.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = shake.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				7005D20C1E058E7000FE7D8F /* Assets.xcassets */,
 				7005D20E1E058E7000FE7D8F /* LaunchScreen.storyboard */,
 				7005D2111E058E7000FE7D8F /* Info.plist */,
+				70E6A2481E06D9A50040A509 /* shake.jpg */,
 				7005D22D1E05A5B400FE7D8F /* horn.mp3 */,
 				7005D22E1E05A5B400FE7D8F /* hillbilly.mp3 */,
 				7005D22F1E05A5B400FE7D8F /* phone.mp3 */,
@@ -164,6 +167,7 @@
 				7005D2391E05A5B400FE7D8F /* hillbilly.mp3 in Resources */,
 				7005D2411E05A5B400FE7D8F /* whistle.mp3 in Resources */,
 				7005D20D1E058E7000FE7D8F /* Assets.xcassets in Resources */,
+				70E6A2491E06D9A50040A509 /* shake.jpg in Resources */,
 				7005D23F1E05A5B400FE7D8F /* jet.mp3 in Resources */,
 				7005D20B1E058E7000FE7D8F /* Main.storyboard in Resources */,
 				7005D23B1E05A5B400FE7D8F /* saloon.mp3 in Resources */,
@@ -344,6 +348,7 @@
 				7005D2161E058E7000FE7D8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

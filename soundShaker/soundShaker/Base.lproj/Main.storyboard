@@ -1,26 +1,69 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="soundShaker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shake.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="U4M-Sw-BUh">
+                                <rect key="frame" x="0.0" y="155" width="432" height="581"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake Break !!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d3q-up-voe">
+                                <rect key="frame" x="127" y="20" width="160" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="Lk1-S6-gsq"/>
+                                    <constraint firstAttribute="width" constant="160" id="u4Y-vh-k0O"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" red="0.0" green="0.78252691030502319" blue="0.11355514079332352" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake your phone for a fun surprise ..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="25W-It-WJw">
+                                <rect key="frame" x="59.666666666666657" y="65" width="295" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="kam-SO-Y8v"/>
+                                    <constraint firstAttribute="width" constant="295" id="sXt-p8-KmQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.94766563177108765" green="0.39389777183532715" blue="0.16927599906921387" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="U4M-Sw-BUh" secondAttribute="trailing" constant="-18" id="4cS-Mb-6A9"/>
+                            <constraint firstItem="d3q-up-voe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8Ab-yO-3K2"/>
+                            <constraint firstItem="d3q-up-voe" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="9ep-na-soH"/>
+                            <constraint firstItem="25W-It-WJw" firstAttribute="top" secondItem="d3q-up-voe" secondAttribute="bottom" constant="15" id="Bmf-KA-1wq"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="U4M-Sw-BUh" secondAttribute="bottom" id="m8x-VL-GKe"/>
+                            <constraint firstItem="U4M-Sw-BUh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="nRh-hV-cT3"/>
+                            <constraint firstItem="U4M-Sw-BUh" firstAttribute="top" secondItem="25W-It-WJw" secondAttribute="bottom" constant="65" id="v2h-GB-wDH"/>
+                            <constraint firstItem="25W-It-WJw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xHz-fN-mG1"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-78.75" y="137.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="shake.jpg" width="1280" height="720"/>
+    </resources>
 </document>
