@@ -26,6 +26,37 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        let url = URL(string: "https://www.googleapis.com/blogger/v3/blogs/10861780/posts?key=AIzaSyDJIrUYiKxX_U3Ifm1YqEw6vf1Ab9OxoS4")
+        
+        let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
+            
+            if error != nil {
+                print(error)
+                
+            }else {
+                if let urlContent = data {
+                    
+                    do {
+                        
+                        let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
+                        
+                        /* print("Blog Title = ", jsonResult["items"][1]["title"]) as? String
+                         
+                         if let description = ((jsonResult["weather"] as? NSArray)?[0] as? NSDictionary)?["description"] as? String {
+                         print("WX description = ", description)
+                         }
+                         */
+                        
+                        print("json from Google blog API:", jsonResult)
+                        
+                    } catch {
+                        print("JSON Serialization failed")
+                    }
+                }
+            }
+        }
+        task.resume()
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
