@@ -40,14 +40,17 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                         
                         let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                         
-                        /* print("Blog Title = ", jsonResult["items"][1]["title"]) as? String
-                         
-                         if let description = ((jsonResult["weather"] as? NSArray)?[0] as? NSDictionary)?["description"] as? String {
-                         print("WX description = ", description)
-                         }
-                         */
+                        if let arr = jsonResult["items"] as? NSArray {
+    
+                            if let title = (arr[1] as? NSDictionary)?["title"] as? String {
+                             print("Title = ", title)
+                             }
+                            print ("Blog array 1 =", arr[1])
+                        }
                         
-                        print("json from Google blog API:", jsonResult)
+
+                        
+                        print("json from Google blog API:", jsonResult["items"])
                         
                     } catch {
                         print("JSON Serialization failed")
