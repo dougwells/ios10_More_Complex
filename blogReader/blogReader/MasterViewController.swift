@@ -32,23 +32,51 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                     do {
                         
                         let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
-                        
+                        let context = self.fetchedResultsController.managedObjectContext
                         self.arr = (jsonResult["items"] as? NSArray)!
+                        let request = NSFetchRequest<Event>(entityName: "Event")
+                        
+                        do {
+                            let results = try context.fetch(request)
+                            if results.count > 0 {
+                                for result in results {
+                                    context.delete(result)
+                                    
+                                    do {
+                                        try context.save()
+                                    } catch {
+                                        print("Specific Delete Failed")
+                                    }
+                                }
+                            }
+                        } catch {
+                            print("Delete Failed")
+                        }
+                        
                         for item in self.arr as Array {
                             print(item["title"])
                             print(item["published"])
-
-                            /* 
-                             if let title = (item as? NSDictionary)?["title"] as? String {
-                             print("Title = ", title)
-                             }
-                             */
+                            
+                            
+                            let newEvent = Event(context: context)
+                            
+                            // If appropriate, configure the new managed object.
+                            newEvent.timestamp = NSDate()
+                            newEvent.setValue(item["published"] as! String, forKey: "published")
+                            newEvent.setValue(item["title"] as! String, forKey: "title")
+                            newEvent.setValue(item["content"] as! String, forKey: "content")
+                            
+                            // Save the context.
+                            do {
+                                try context.save()
+                            } catch {
+                                // Replace this implementation with code to handle the error appropriately.
+                                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                                let nserror = error as NSError
+                                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                            }
                         }
-                        // print ("Blog array 1 =", self.arr[1])
-                        
-
-                        
-                        // print("json from Google blog API:", jsonResult["items"])
+                        self.tableView.reloadData()
                         
                     } catch {
                         print("JSON Serialization failed")
@@ -122,7 +150,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
 
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
-        cell.textLabel!.text = event.timestamp!.description
+        cell.textLabel!.text = event.value(forKey: "title") as? String
     }
 
     // MARK: - Fetched results controller
@@ -138,7 +166,7 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         fetchRequest.fetchBatchSize = 20
         
         // Edit the sort key as appropriate.
-        let sortDescriptor = NSSortDescriptor(key: "timestamp", ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: "published", ascending: false)
         
         fetchRequest.sortDescriptors = [sortDescriptor]
         
