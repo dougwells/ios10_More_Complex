@@ -10,7 +10,8 @@ import UIKit
 import CoreData
 
 class MasterViewController: UITableViewController, NSFetchedResultsControllerDelegate {
-
+    
+    var arr: NSArray = []
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
 
@@ -18,14 +19,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
-
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
-        self.navigationItem.rightBarButtonItem = addButton
-        if let split = self.splitViewController {
-            let controllers = split.viewControllers
-            self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
-        }
         let url = URL(string: "https://www.googleapis.com/blogger/v3/blogs/10861780/posts?key=AIzaSyDJIrUYiKxX_U3Ifm1YqEw6vf1Ab9OxoS4")
         
         let task = URLSession.shared.dataTask(with: url!) { (data, response, error) in
@@ -40,17 +33,22 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
                         
                         let jsonResult = try JSONSerialization.jsonObject(with: urlContent, options: JSONSerialization.ReadingOptions.mutableContainers) as AnyObject
                         
-                        if let arr = jsonResult["items"] as? NSArray {
-    
-                            if let title = (arr[1] as? NSDictionary)?["title"] as? String {
+                        self.arr = (jsonResult["items"] as? NSArray)!
+                        for item in self.arr as Array {
+                            print(item["title"])
+                            print(item["published"])
+
+                            /* 
+                             if let title = (item as? NSDictionary)?["title"] as? String {
                              print("Title = ", title)
                              }
-                            print ("Blog array 1 =", arr[1])
+                             */
                         }
+                        // print ("Blog array 1 =", self.arr[1])
                         
 
                         
-                        print("json from Google blog API:", jsonResult["items"])
+                        // print("json from Google blog API:", jsonResult["items"])
                         
                     } catch {
                         print("JSON Serialization failed")
@@ -60,11 +58,6 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
         }
         task.resume()
 
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        self.clearsSelectionOnViewWillAppear = self.splitViewController!.isCollapsed
-        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,24 +117,9 @@ class MasterViewController: UITableViewController, NSFetchedResultsControllerDel
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        return true
+        return false
     }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            let context = self.fetchedResultsController.managedObjectContext
-            context.delete(self.fetchedResultsController.object(at: indexPath))
-                
-            do {
-                try context.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
 
     func configureCell(_ cell: UITableViewCell, withEvent event: Event) {
         cell.textLabel!.text = event.timestamp!.description
