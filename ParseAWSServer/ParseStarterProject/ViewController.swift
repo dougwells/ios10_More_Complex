@@ -16,6 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        /* Save user in Parse
             let users = PFObject(className: "Users")
             users["name"] = "Douglas"
             users.saveInBackground { (success, error) -> Void in
@@ -39,6 +40,33 @@ class ViewController: UIViewController {
             }
             
         }
+        */
+        
+        //Query Parse to retrieve data
+        
+        let query = PFQuery(className: "Users")
+        query.getObjectInBackground(withId: "XDvqeagvFA") { (object, error) in
+            
+            if error != nil {
+                print("Error w/PFQuery", error)
+                
+            } else {
+                if let user = object {
+                    print("Queried user = ", user)
+                    print("Queried user name =", user["name"])
+                    
+                    user["name"] = "Doug"
+                    user.saveInBackground(block: { (success, error) in
+                        if error != nil {
+                            print("Error re-saving user", error!)
+                        } else if success {
+                            print("User name re-saved", user["name"])
+                        }
+                    })
+                }
+            }
+        }
+        
         
     }
 
